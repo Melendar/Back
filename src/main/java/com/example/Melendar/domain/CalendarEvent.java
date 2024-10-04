@@ -21,8 +21,12 @@ public class CalendarEvent {
     private Long eventId;
 
     @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)  // 외래 키로 user_id 설정
+    private User user;  // User와 다대일 관계
+
+    @ManyToOne
     @JoinColumn(name = "group_id", nullable = false)
-    private Long group_id;
+    private Group group;
     // JoinColumn은 JPA에서 외래키를 명시적으로 설정하기 위해 사용됨
 
     @Column(nullable = false)
@@ -41,7 +45,7 @@ public class CalendarEvent {
     private Boolean notification;
 
     @Column(nullable = false)
-    private Boolean repeat;
+    private Boolean isRepeated;
 
     @Column(name = "is_completed", nullable = false)
     private Boolean isCompleted;

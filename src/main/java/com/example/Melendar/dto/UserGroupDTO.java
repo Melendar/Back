@@ -14,8 +14,8 @@ public class UserGroupDTO {
     public static UserGroupDTO of(UserGroup userGroup) {
         UserGroupDTO usergroupDTO = new UserGroupDTO();
         usergroupDTO.setUserGroupId(userGroup.getUserGroupId());
-        usergroupDTO.setUserId(userGroup.getUser_id());
-        usergroupDTO.setGroupId(userGroup.getGroup_id());
+        usergroupDTO.setUserId(userGroup.getUser().getUserId());
+        usergroupDTO.setGroupId(userGroup.getGroup().getGroupId());
         usergroupDTO.setGroupColor(userGroup.getGroupColor());
         usergroupDTO.setGroupDescription(userGroup.getGroupDescription());
         return usergroupDTO;

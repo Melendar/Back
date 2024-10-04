@@ -55,19 +55,21 @@ public class UserGroupService {
         }
     }
 
-    public List<Long> getUserIdsByGroupId(Long groupId) {   // 같은 그룹에 속해있는 user_id 리스트로 반환
+    // 같은 그룹에 속해있는 user_id 리스트 반환
+    public List<Long> getUserIdsByGroupId(Long groupId) {
         // groupId로 UserGroup 목록을 조회한 후, 각 UserGroup에서 user_id를 추출하여 리스트로 반환
-        return userGroupRepository.findByGroupId(groupId)
-                .stream()   // 데이터 컬렉션 처리
-                .map(UserGroup::getUser_id)  // UserGroup에서 user_id를 직접 추출
-                .collect(Collectors.toList());  // List<Long>으로 변환
+        return userGroupRepository.findByGroup_GroupId(groupId)
+                .stream()
+                .map(userGroup -> userGroup.getUser().getUserId())  // user_id 대신 User 객체에서 ID 추출
+                .collect(Collectors.toList());
     }
 
-    public List<Long> getGroupIdsByUserId(Long userId) {    // 한 user가 속해있는 모든 group_id 값 리스트로 반환
-        return userGroupRepository.findByUserId(userId)
+    // 한 user가 속해있는 모든 group_id 리스트 반환
+    public List<Long> getGroupIdsByUserId(Long userId) {
+        return userGroupRepository.findByUser_Id(userId)
                 .stream()
-                .map(UserGroup::getGroup_id)  // UserGroup에서 group_id를 직접 추출
-                .collect(Collectors.toList());  // List<Long>으로 변환
+                .map(userGroup -> userGroup.getGroup().getGroupId())  // group_id 대신 Group 객체에서 ID 추출
+                .collect(Collectors.toList());
     }
 
 }

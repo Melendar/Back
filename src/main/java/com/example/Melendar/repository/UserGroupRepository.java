@@ -8,6 +8,6 @@ import java.util.List;
 
 @Repository
 public interface UserGroupRepository extends JpaRepository<UserGroup, Long> {
-    List<UserGroup> findByGroupId(Long groupId);
-    List<UserGroup> findByUserId(Long userId);
+    List<UserGroup> findByGroup_GroupId(Long groupId);
+    List<UserGroup> findByUser_Id(Long userId);
 }

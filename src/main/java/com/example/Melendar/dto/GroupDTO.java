@@ -14,4 +14,8 @@ public class GroupDTO {
         groupDTO.setGroupName(group.getGroupName());
         return groupDTO;
     }
+
+    public Long getId(){
+        return groupId;
+    }
 }
