@@ -6,7 +6,7 @@ import lombok.*;
 import java.util.List;
 
 @Entity
-@Table(name = "Group")
+@Table(name = "`Group`")
 @Getter
 @Setter
 @NoArgsConstructor

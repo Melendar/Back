@@ -16,7 +16,7 @@ public class MemoDTO {
     public static MemoDTO of(Memo memo) {
         MemoDTO memoDTO = new MemoDTO();
         memoDTO.setMemoId(memo.getMemoId());
-        memoDTO.setUserId(memo.getUser_id());
+        memoDTO.setUserId(memo.getUser().getUserId());
         memoDTO.setTitle(memo.getTitle());
         memoDTO.setContent(memo.getContent());
         memoDTO.setDate(memo.getDate());

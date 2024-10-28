@@ -14,4 +14,5 @@ public class UserDTO {
         userDTO.setNickname(user.getNickname());
         return userDTO;
     }
+
 }

@@ -31,4 +31,8 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserGroup> userGroups;
     // mappedBy 속성 값은 테이블 이름과 직접적 연관 x, 관계 정의하는 반대쪽 엔티티에서 참조하는 필드의 이름을 가리킴
+
+    public Long getId(){
+        return userId;
+    }
 }

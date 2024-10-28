@@ -21,13 +21,13 @@ public class CalendarEventDTO {
     public static CalendarEventDTO of(CalendarEvent event) {
         CalendarEventDTO calendareventDTO = new CalendarEventDTO();
         calendareventDTO.setEventId(event.getEventId());
-        calendareventDTO.setGroupId(event.getGroup_id());
+        calendareventDTO.setGroupId(event.getGroup().getGroupId());
         calendareventDTO.setDate(event.getDate());
         calendareventDTO.setTask(event.getTask());
         calendareventDTO.setStartTime(event.getStartTime());
         calendareventDTO.setEndTime(event.getEndTime());
         calendareventDTO.setNotification(event.getNotification());
-        calendareventDTO.setRepeat(event.getRepeat());
+      calendareventDTO.setRepeat(event.getIsRepeated());
         calendareventDTO.setIsCompleted(event.getIsCompleted());
         return calendareventDTO;
     }

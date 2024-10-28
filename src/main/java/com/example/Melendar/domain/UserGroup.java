@@ -19,11 +19,11 @@ public class UserGroup {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private Long user_id;
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "group_id", nullable = false)
-    private Long group_id;
+    private Group group;
 
     @Column(name = "group_color", length = 7) // 색상 코드(예: #FFFFFF)를 위한 필드
     private String groupColor;
