@@ -16,9 +16,9 @@ spring:
       force-request: true
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/Memo_Anywhere?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
-    username: root
-    password: 1234
+    url: jdbc:mysql://melendar.c36kyc4so6x7.ap-northeast-2.rds.amazonaws.com.melendar
+    username: admin
+    password: ~asdf1234
     # HikariCP 설정, 데이터베이스 커넥션 캐싱
     hikari:
       maximum-pool-size: 10

@@ -1,12 +1,13 @@
-create database memo_anywhere;
+create database melendar;
 
-use memo_anywhere;
+use melendar;
 
 drop table if exists `User`, `Group`, `UserGroup`, `Memo`, `CalendarEvent`;
 
 CREATE TABLE `User` (
    `user_id`   bigint   NOT NULL AUTO_INCREMENT PRIMARY KEY,
-   `nickname`   varchar(20)   NULL
+   `nickname`   varchar(20)   NULL,
+   `profile_image`  varchar(30) NULL
 );
 
 CREATE TABLE `Group` (
@@ -19,11 +20,6 @@ CREATE TABLE `CalendarEvent` (
    `group_id`   bigint   NOT null,
    `date`   date   NOT NULL,
    `task`   text   NULL,
-   `start_time`   datetime   NULL,
-   `end_time`   datetime   NULL,
-   `notification`   char(10)   NOT NULL,
-   `repeat`   char(10)   NOT NULL,
-   `is_completed`   boolean   NOT NULL default true,
    foreign key (group_id) references `Group`(group_id) on delete cascade
 );
 
@@ -42,8 +38,6 @@ CREATE TABLE `UserGroup` (
    `group_id`   bigint   NOT NULL,
    `group_description`   text   NULL,
    `group_color`   varchar(10)   NULL,
-   foreign key (user_id) references `User`(user_id) on delete cascade,
+   FOREIGN KEY (user_id) REFERENCES User(user_id) ON DELETE CASCADE,
    foreign key(group_id) references `Group`(group_id) on delete cascade
 );
-
--- 로그인 후 user 정보 얻어와서 테이블 생성 ("개인" 그룹 테이블)
