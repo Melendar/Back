@@ -1,8 +1,10 @@
 package com.example.Melendar.service;
 
 import com.example.Melendar.domain.Memo;
+import com.example.Melendar.domain.User;
 import com.example.Melendar.dto.MemoDTO;
 import com.example.Melendar.repository.MemoRepository;
+import com.example.Melendar.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,54 +17,53 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class MemoService {
     private final MemoRepository memoRepository;
+    private final UserRepository userRepository;
 
-    public MemoDTO createMemo(String title, String content, LocalDate date) {    // 메모 생성
+    // 1. 특정 user_id에 매핑되는 모든 memo를 불러오기
+    public List<MemoDTO> getMemosByUserId(Long userId) {
+        return memoRepository.findByUserUserId(userId).stream()
+                .map(MemoDTO::of)
+                .collect(Collectors.toList());
+    }
+
+    // 2. 새로운 메모 추가
+    public MemoDTO createMemo(Long userId, MemoDTO memoDTO) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
+
         Memo memo = Memo.builder()
-                .title(title)
-                .content(content)
-                .date(date)
+                .user(user)
+                .title(memoDTO.getTitle())
+                .content(memoDTO.getContent())
+                .date(memoDTO.getDate())
                 .build();
 
         Memo savedMemo = memoRepository.save(memo);
         return MemoDTO.of(savedMemo);
     }
 
-    public MemoDTO updateMemo(Long memoId, String title, String content, LocalDate date) {     // 메모 업데이트
-        Optional<Memo> memo = memoRepository.findById(memoId);
-        if (memo.isPresent()) {
-            Memo updatedMemo = memo.get();
-            updatedMemo.setTitle(title);
-            updatedMemo.setContent(content);
-            updatedMemo.setDate(date);
-            Memo savedMemo = memoRepository.save(updatedMemo);
-            return MemoDTO.of(savedMemo);
+    // 3. 특정 memo_id에 해당하는 메모 수정 (user_id와 memo_id는 변경 불가)
+    public MemoDTO updateMemo(Long memoId, MemoDTO memoDTO) {
+        Optional<Memo> memoOptional = memoRepository.findById(memoId);
+        if (memoOptional.isPresent()) {
+            Memo memo = memoOptional.get();
+            memo.setTitle(memoDTO.getTitle());
+            memo.setContent(memoDTO.getContent());
+            memo.setDate(memoDTO.getDate());
+            memoRepository.save(memo);
+            return MemoDTO.of(memo);
         } else {
-            return null;
+            throw new IllegalArgumentException("Memo not found with id: " + memoId);
         }
     }
 
-    public MemoDTO getMemoById(Long memoId) {   // 메모 정보 가져오기
-        System.out.println("id: " + memoId);
-        Optional<Memo> memo = memoRepository.findById(memoId);
-        System.out.println("user: " + memo.get());
-        return memo.isPresent() ? MemoDTO.of(memo.get()) : null;
-    }
-
-    public boolean deleteMemoById(Long memoId) {    // 메모 삭제하기
-        Optional<Memo> memo = memoRepository.findById(memoId);
-        if (memo.isPresent()) {
-            memoRepository.deleteById(memoId);      // 삭제하는 역할
-            return true;    // 해당 아이디의 메모가 존재해 삭제하게 되면 true 반환
+    // 4. 특정 memo_id에 해당하는 메모 삭제
+    public void deleteMemo(Long memoId) {
+        if (memoRepository.existsById(memoId)) {
+            memoRepository.deleteById(memoId);
         } else {
-            return false; // 메모가 존재하지 않을 경우 false 반환
+            throw new IllegalArgumentException("Memo not found with id: " + memoId);
         }
-    }
-
-    public List<MemoDTO> getAllMemos() {   // 모든 메모 가져오기
-        List<Memo> memos = memoRepository.findAll();  // DB에서 모든 메모를 가져옴
-        return memos.stream()
-                .map(MemoDTO::of)  // Memo 엔티티를 MemoDTO로 변환
-                .collect(Collectors.toList());  // 리스트로 변환하여 반환
     }
 
 }
