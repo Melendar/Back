@@ -13,24 +13,22 @@ public class UserController {
     @Autowired      // 의존성 주입
     private UserService userService;
 
-    @GetMapping("/{id}")
-    public UserDTO getUserById(@PathVariable Long id) {
-        return userService.getUserById(id);
+    @GetMapping("/login")
+    public UserDTO login(@RequestParam Long userId) {
+        // 서비스에서 로그인 로직 처리 후 UserDTO 반환
+        return userService.login(userId);
     }
 
-    @PostMapping("/create")
-    public UserDTO createUser(@RequestParam("nick_name") String userNickname) {
-        return userService.createUser(userNickname);
+    // 닉네임 업데이트
+    @PutMapping("/updateNickname")
+    public UserDTO updateNickname(@RequestParam Long userId, @RequestParam String newNickname) {
+        return userService.updateNickname(userId, newNickname);
     }
 
-    @PostMapping("/update")
-    public UserDTO updateUser(@RequestParam("id") Long userId,
-                              @RequestParam("nick_name") String userNickname) {
-        return userService.updateUser(userId, userNickname);
+    // 프로필 이미지 업데이트
+    @PutMapping("/updateProfileImage")
+    public UserDTO updateProfileImage(@RequestParam Long userId, @RequestParam String newProfileImage) {
+        return userService.updateProfileImage(userId, newProfileImage);
     }
 
-    @PostMapping("/nicknames")
-    public List<String> getNicknamesByUserIds(@RequestBody List<Long> userIds) {
-        return userService.getNicknamesByUserIds(userIds);
-    }
 }

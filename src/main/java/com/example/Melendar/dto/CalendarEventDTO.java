@@ -12,11 +12,6 @@ public class CalendarEventDTO {
     private Long groupId;
     private LocalDate date;
     private String task;
-    private LocalTime startTime;
-    private LocalTime endTime;
-    private Boolean notification;
-    private Boolean repeat;
-    private Boolean isCompleted;
 
     public static CalendarEventDTO of(CalendarEvent event) {
         CalendarEventDTO calendareventDTO = new CalendarEventDTO();
@@ -24,11 +19,6 @@ public class CalendarEventDTO {
         calendareventDTO.setGroupId(event.getGroup().getGroupId());
         calendareventDTO.setDate(event.getDate());
         calendareventDTO.setTask(event.getTask());
-        calendareventDTO.setStartTime(event.getStartTime());
-        calendareventDTO.setEndTime(event.getEndTime());
-        calendareventDTO.setNotification(event.getNotification());
-      calendareventDTO.setRepeat(event.getIsRepeated());
-        calendareventDTO.setIsCompleted(event.getIsCompleted());
         return calendareventDTO;
     }
 }

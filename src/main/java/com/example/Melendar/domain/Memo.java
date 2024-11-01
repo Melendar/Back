@@ -22,12 +22,14 @@ public class Memo {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(nullable = false, length = 100)
+    @Lob
+    @Column(nullable = true)  // text 타입에 맞게 @Lob 사용
     private String title;
 
-    @Column(nullable = false, length = 500)
+    @Lob
+    @Column(nullable = true)  // text 타입에 맞게 @Lob 사용
     private String content;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private LocalDate date;
 }
