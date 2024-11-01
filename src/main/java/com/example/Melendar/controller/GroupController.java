@@ -49,13 +49,7 @@ public class GroupController {
         return groupService.updateGroup(groupId, groupDTO);
     }
 
-    // 5. 그룹 삭제하기: 특정 groupId에 해당하는 그룹 삭제
-    @DeleteMapping("/delete/{groupId}")
-    public void deleteGroup(@PathVariable Long groupId) {
-        groupService.deleteGroup(groupId);
-    }
-
-    // 6. 그룹원 초대
+    // 5. 그룹원 초대
     @PostMapping("/invite")
     public void inviteUserToGroup(@RequestParam Long groupId, @RequestParam Long userId) {
         groupService.inviteUserToGroup(groupId, userId);

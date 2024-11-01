@@ -84,15 +84,6 @@ public class GroupService {
         return GroupDTO.of(group);
     }
 
-    // 4. 특정 groupId에 해당하는 그룹 삭제
-    public void deleteGroup(Long groupId) {
-        if (groupRepository.existsById(groupId)) {
-            groupRepository.deleteById(groupId);
-        } else {
-            throw new IllegalArgumentException("Group not found with id: " + groupId);
-        }
-    }
-
     // 4. 그룹원 초대
     @Transactional
     public void inviteUserToGroup(Long groupId, Long userId) {
